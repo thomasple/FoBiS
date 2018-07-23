@@ -306,7 +306,7 @@ class Compiler(object):
     mod_dir : str
       path of the modules directory
     """
-    return self.fcs + ' ' + self.lflags + ' ' + self.modsw + mod_dir
+    return self.fcs + ' ' + self.modsw + mod_dir, self.lflags
 
   def pprint(self, prefix=''):
     """

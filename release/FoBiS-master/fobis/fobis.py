@@ -481,7 +481,7 @@ def save_makefile(configuration, pfiles, builder):
           string.append("$(DEXE)" + pfile.basename.upper() + ": $(MKDIRS) " + "$(DOBJ)" + pfile.basename.lower() + ".o\n")
         string.append("\t@rm -f $(filter-out $(DOBJ)" + pfile.basename.lower() + ".o,$(EXESOBJ))\n")
         string.append("\t@echo $(LITEXT)\n")
-        string.append("\t@$(FC) $(OPTSL) $(DOBJ)*.o $(LIBS) -o $@\n")
+        string.append("\t@$(FC) $(DOBJ)*.o -o $@ $(LIBS) $(OPTSL) \n")
         string.append("EXES := $(EXES) " + pfile.basename.upper() + "\n")
     return "".join(string)
 

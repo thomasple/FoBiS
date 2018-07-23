@@ -97,7 +97,7 @@ class Builder(object):
     self._set_preprocessor(preprocessor=cliargs.preprocessor, preprocessor_dir=cliargs.preprocessor_dir, preprocessor_ext=cliargs.preprocessor_ext)
 
     self.cmd_comp = self.compiler.compile_cmd(mod_dir=self.mod_dir)
-    self.cmd_link = self.compiler.link_cmd(mod_dir=self.mod_dir)
+    self.cmd_link, self.cmd_lflags = self.compiler.link_cmd(mod_dir=self.mod_dir)
     return
 
   @staticmethod
@@ -363,7 +363,7 @@ class Builder(object):
       string containing the link command
     """
     exe = self.get_output_name(file_to_build=file_to_build, output=output)
-    link_cmd = self.cmd_link + " " + self._get_libs_link_command(file_to_build=file_to_build, nomodlibs=nomodlibs, submodules=submodules, mklib=mklib) + " -o " + exe
+    link_cmd = self.cmd_link + " " + self._get_libs_link_command(file_to_build=file_to_build, nomodlibs=nomodlibs, submodules=submodules, mklib=mklib) + " -o " + exe + ' ' + self.cmd_lflags
     return link_cmd, exe
 
   def _mklib_command(self, file_to_build, output=None, nomodlibs=None, submodules=None, mklib=None):
