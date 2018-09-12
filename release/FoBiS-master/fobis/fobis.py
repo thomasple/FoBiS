@@ -465,6 +465,7 @@ def save_makefile(configuration, pfiles, builder):
     string.append("\n#building rules\n")
     # linking rules
     for pfile in pfiles:
+      #exe=configuration.cliargs.output
       save_target_rule = False
       if pfile.program:
         save_target_rule = True
@@ -473,16 +474,16 @@ def save_makefile(configuration, pfiles, builder):
           save_target_rule = True
       if save_target_rule:
         if len(nomodlibs) > 0:
-          string.append("$(DEXE)" + pfile.basename.upper() + ": $(MKDIRS) " + "$(DOBJ)" + pfile.basename.lower() + ".o \\" + "\n")
+          string.append("$(DEXE)" + configuration.cliargs.output + ": $(MKDIRS) " + "$(DOBJ)" + pfile.basename.lower() + ".o \\" + "\n")
           for nomod in nomodlibs[:-1]:
             string.append("\t" + nomod + " \\" + "\n")
           string.append("\t" + nomodlibs[-1] + "\n")
         else:
-          string.append("$(DEXE)" + pfile.basename.upper() + ": $(MKDIRS) " + "$(DOBJ)" + pfile.basename.lower() + ".o\n")
-        string.append("\t@rm -f $(filter-out $(DOBJ)" + pfile.basename.lower() + ".o,$(EXESOBJ))\n")
+          string.append("$(DEXE)" + configuration.cliargs.output + ": $(MKDIRS) " + "$(DOBJ)" + pfile.basename.lower() + ".o\n")
+        string.append("\t@rm -f $(filter-out $(DOBJ)" + pfile.basename + ".o,$(EXESOBJ))\n")
         string.append("\t@echo $(LITEXT)\n")
         string.append("\t@$(FC) $(DOBJ)*.o -o $@ $(LIBS) $(OPTSL) \n")
-        string.append("EXES := $(EXES) " + pfile.basename.upper() + "\n")
+        string.append("EXES := $(EXES) " + configuration.cliargs.output + "\n")
     return "".join(string)
 
   def _gnu_auxiliary_rules():
